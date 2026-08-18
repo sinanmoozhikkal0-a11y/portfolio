@@ -1,0 +1,76 @@
+/* Modern Editorial About Styles */
+
+.about-section {
+  background-color: var(--bg-primary);
+  padding: 5rem 0;
+  transition: background-color 0.4s ease;
+}
+
+.about-title {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  transition: color 0.4s ease;
+}
+
+.about-title .bold-title {
+  font-weight: 700;
+}
+
+.about-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  transition: border-color 0.4s ease, background-color 0.4s ease;
+}
+
+.about-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(105%);
+  will-change: transform;
+}
+
+.about-philosophy-quote {
+  font-family: var(--font-sans), sans-serif;
+  font-style: normal;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  line-height: 1.6;
+  color: var(--text-primary);
+  border-left: 1px solid var(--border-active);
+  padding-left: 1.5rem;
+  font-weight: 400;
+  transition: color 0.4s ease, border-left-color 0.4s ease;
+}
+
+.about-exp-item {
+  border-top: 1px solid var(--border-primary);
+  padding: 1.25rem 0;
+  transition: border-top-color 0.4s ease;
+}
+
+.about-exp-item:last-child {
+  border-bottom: 1px solid var(--border-primary);
+}
+
+/* Scroll-triggered reveal mask */
+.image-reveal-mask {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-primary);
+  z-index: 10;
+  transform-origin: top;
+  transition: background-color 0.4s ease;
+}

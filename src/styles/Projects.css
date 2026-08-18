@@ -1,0 +1,252 @@
+/* Modern Editorial Case Studies Styles */
+
+.projects-section {
+  background-color: var(--bg-primary);
+  padding: 5rem 0;
+  transition: background-color 0.4s ease;
+}
+
+/* 2-Column Grid inside the Scroll Card */
+.project-card-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: stretch;
+  text-align: left;
+}
+
+/* Image Column inside the Card */
+.project-card-media {
+  width: 100%;
+}
+
+.project-card-img-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border: 1px solid var(--border-primary);
+  background-color: var(--bg-primary);
+  transition: border-color 0.4s ease;
+  border-radius: 16px;
+}
+
+.project-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(105%);
+  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.project-card-img-container:hover .project-card-img {
+  filter: grayscale(20%) contrast(100%);
+  transform: scale(1.03);
+}
+
+/* Info Column inside the Card */
+.project-card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.project-card-num {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--color-gray-dark);
+  letter-spacing: 0.25em;
+  line-height: 1;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.project-card-title {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  transition: color 0.4s ease;
+}
+
+.project-card-desc {
+  color: var(--color-gray);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* Tech tag elements */
+.project-tech-tag {
+  background-color: transparent;
+  border: 1px solid var(--border-primary);
+  color: var(--color-gray);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.35rem 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.project-tech-tag:hover {
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+
+/* Card Metadata Grid Spec */
+.project-card-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  border-top: 1px solid var(--border-primary);
+  padding-top: 1.2rem;
+  margin-top: 1.5rem;
+  transition: border-top-color 0.4s ease;
+}
+
+.project-card-meta-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card-meta-label {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--color-gray-dark);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+  transition: color 0.4s ease;
+}
+
+.project-card-meta-value {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.4s ease;
+}
+
+/* Action button triggers */
+.project-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.8rem;
+  border: 1px solid var(--text-primary);
+  transition: all 0.35s ease;
+}
+
+.project-btn-primary:hover {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+
+.project-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.8rem;
+  border: 1px solid var(--border-primary);
+  transition: all 0.35s ease;
+}
+
+.project-btn-secondary:hover {
+  border-color: var(--text-primary);
+}
+
+.magnetic-btn-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+/* Responsiveness adjustments for standard viewports */
+@media (max-width: 1024px) {
+  .project-card-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .project-card-grid {
+    gap: 1.25rem;
+  }
+  .project-card-meta-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+  .project-btn-primary,
+  .project-btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 0.8rem 1rem;
+  }
+  .magnetic-btn-wrap {
+    width: 100%;
+  }
+}
+
+/* Glassmorphism Tilt Card Styling */
+.project-tilt-card {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(20, 20, 20, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 32px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  padding: 3rem;
+  transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+html.light .project-tilt-card {
+  background: rgba(248, 248, 248, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .project-tilt-card {
+    padding: 2.5rem 1.5rem;
+    border-radius: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-tilt-card {
+    padding: 1.5rem 1rem;
+    border-radius: 20px;
+  }
+}

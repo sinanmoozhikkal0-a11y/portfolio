@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+:root {
+  --font-sans: "Space Grotesk", sans-serif;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-space-grotesk: "Space Grotesk", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  /* Dark mode default variables */
+  --bg-primary: #000000;
+  --text-primary: #ffffff;
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-active: rgba(255, 255, 255, 0.22);
+  --color-gray: #888888;
+  --color-gray-dark: #555555;
+  --bg-glow: radial-gradient(circle, rgba(255, 255, 255, 0.015) 0%, rgba(255, 255, 255, 0) 70%);
+  --noise-opacity: 0.055;
+  --theme-invert: invert(0);
+}
+
+/* Light mode overrides */
+html.light {
+  --bg-primary: #ffffff;
+  --text-primary: #000000;
+  --border-primary: rgba(0, 0, 0, 0.08);
+  --border-active: rgba(0, 0, 0, 0.18);
+  --color-gray: #555555;
+  --color-gray-dark: #888888;
+  --bg-glow: radial-gradient(circle, rgba(0, 0, 0, 0.015) 0%, rgba(0, 0, 0, 0) 70%);
+  --noise-opacity: 0.035;
+  --theme-invert: invert(1);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body, input, textarea, button, select, p, span, div, a, h1, h2, h3, h4, h5, h6, li, label {
+  text-transform: uppercase;
+}
+
+p, span, li {
+  letter-spacing: 0.02em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+button, .button, input[type="submit"] {
+  letter-spacing: 0.15em;
+}
+
+/* Procedurally generated procedural grain noise overlay */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  transition: opacity 0.4s ease;
+}
+
+body.page-loading {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Theme-aware Section Heading styling */
+.section-heading {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  transition: color 0.4s ease;
+}
+
+/* Global scroll-triggered image reveal mask */
+.image-reveal-mask {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bg-primary);
+  z-index: 10;
+  transform-origin: top;
+  transition: background-color 0.4s ease;
+}

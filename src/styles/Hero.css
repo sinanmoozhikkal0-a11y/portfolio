@@ -1,0 +1,182 @@
+/* Luxury Minimalist Hero Styles */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  padding: 9rem 8% 5rem 8%;
+  box-sizing: border-box;
+  transition: background-color 0.4s ease;
+}
+
+@media (max-width: 1024px) {
+  .hero-section {
+    padding: 8rem 6% 4.5rem 6%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-section {
+    padding: 7rem 4% 4rem 4%;
+  }
+}
+
+/* Background interactive subtle glow */
+.hero-bg-glow {
+  position: absolute;
+  width: 55vmax;
+  height: 55vmax;
+  border-radius: 50%;
+  background: var(--bg-glow);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform, left, top;
+  transition: background 0.4s ease;
+}
+
+/* Luxury Status Badge */
+.freelance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: transparent;
+  color: var(--color-gray);
+  padding: 0.4rem 1.1rem;
+  border: 1px solid var(--border-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+/* Typography Hierarchy */
+.hero-title-line {
+  font-size: clamp(2.2rem, 6.2vw, 4.8rem);
+  line-height: 1.1;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-family: var(--font-sans), sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--color-gray);
+  transition: color 0.4s ease;
+}
+
+.hero-title-line .bold-white {
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color 0.4s ease;
+}
+
+.hero-title-line .italic-serif {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--text-primary);
+  font-family: var(--font-serif), serif;
+  transition: color 0.4s ease;
+}
+
+/* Luxury CTA Buttons */
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1.1rem 2.2rem;
+  border: 1px solid var(--text-primary);
+  cursor: pointer;
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+.hero-btn-primary:hover {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1.1rem 2.2rem;
+  border: 1px solid var(--border-primary);
+  cursor: pointer;
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+.hero-btn-secondary:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+/* Scroll indicator line */
+.scroll-indicator-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-gray);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  transition: color 0.4s ease;
+}
+
+.scroll-indicator-line {
+  width: 1px;
+  height: 50px;
+  background-color: var(--border-primary);
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.4s ease;
+}
+
+.scroll-indicator-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background-color: var(--text-primary);
+  animation: scrollDown 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  transition: background-color 0.4s ease;
+}
+
+@keyframes scrollDown {
+  0% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+  100% {
+    transform: translateY(50px);
+  }
+}
+
+.text-mask {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}

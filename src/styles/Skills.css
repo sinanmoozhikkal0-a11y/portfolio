@@ -1,0 +1,81 @@
+/* Premium Minimalist Skills Section Styles */
+
+.skills-section {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 5rem 0;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Explicit high-contrast text colors for White/Light Mode */
+html.light .skills-section {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.light .skills-section h2,
+html.light .skills-section h3,
+html.light .skills-section p,
+html.light .skills-section span,
+html.light .skills-section div {
+  color: #000000 !important;
+}
+
+/* Explicit high-contrast text colors for Dark Mode */
+html.dark .skills-section {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.dark .skills-section h2,
+html.dark .skills-section h3,
+html.dark .skills-section p,
+html.dark .skills-section span,
+html.dark .skills-section div {
+  color: #ffffff !important;
+}
+
+/* Tag styling */
+html.light .skills-tag-item {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+  border-color: #000000 !important;
+  color: #000000 !important;
+}
+
+html.dark .skills-tag-item {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Border dividers */
+html.light .skills-item-border {
+  border-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+html.dark .skills-item-border {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Action Arrow Button */
+html.light .skills-arrow-btn {
+  border-color: #000000 !important;
+  color: #000000 !important;
+  background-color: transparent !important;
+}
+
+html.light .skills-arrow-btn:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.dark .skills-arrow-btn {
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+html.dark .skills-arrow-btn:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}

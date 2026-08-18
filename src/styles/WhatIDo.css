@@ -1,0 +1,205 @@
+/* Modern Minimalist "What I Do" Services Section */
+
+.what-i-do-section {
+  background-color: var(--bg-primary);
+  padding: 6rem 0;
+  position: relative;
+  transition: background-color 0.4s ease;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+}
+
+/* Service Card Container */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(18, 18, 18, 0.75);
+  border: 1px solid var(--border-primary);
+  border-radius: 0;
+  padding: 2.5rem 2rem;
+  position: relative;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+html.light .service-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-active);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+html.light .service-card:hover {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Header: Dot + Number (Left) and Vector Icon (Right) */
+.service-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.service-number-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.service-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--text-primary);
+  display: inline-block;
+}
+
+.service-number {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+}
+
+.service-icon-wrap {
+  color: var(--text-primary);
+  opacity: 0.85;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.service-card:hover .service-icon-wrap {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+/* Card Body */
+.service-title {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+
+.service-title-line {
+  width: 30px;
+  height: 2px;
+  background-color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  transform-origin: left;
+  transition: transform 0.4s ease, width 0.4s ease;
+}
+
+.service-card:hover .service-title-line {
+  width: 50px;
+}
+
+.service-desc {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-gray);
+  margin-bottom: 2rem;
+  min-height: 4.8rem;
+}
+
+/* Feature List with Checkmark Icons */
+.service-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0;
+  border-top: 1px solid var(--border-primary);
+  padding-top: 1.5rem;
+}
+
+.service-check-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.check-icon {
+  color: var(--text-primary);
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+/* Footer Action Link */
+.service-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: 1rem;
+}
+
+.service-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.action-arrow {
+  transition: transform 0.3s ease;
+}
+
+.service-action-btn:hover .action-arrow,
+.service-card:hover .action-arrow {
+  transform: translateX(5px);
+}
+
+/* Responsive Grid Rules */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .service-desc {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .service-card {
+    padding: 1.75rem 1.25rem;
+    border-radius: 0;
+  }
+
+  .service-title {
+    font-size: 1.1rem;
+  }
+}

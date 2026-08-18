@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sinan M - CV / Resume</title>
+    <!-- Space Grotesk Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --font-sans: "Space Grotesk", sans-serif;
+        --color-black: #000000;
+        --color-dark: #222222;
+        --color-gray: #555555;
+        --color-light-gray: #888888;
+        --border-color: #e5e7eb;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        color: var(--color-black);
+        background-color: #f3f4f6;
+        line-height: 1.5;
+        padding: 3rem 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .cv-container {
+        width: 100%;
+        max-width: 800px;
+        background-color: #ffffff;
+        padding: 3.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        position: relative;
+      }
+
+      /* Floating Action Header (for browser view only) */
+      .action-header {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 100;
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .btn {
+        background-color: var(--color-black);
+        color: #ffffff;
+        border: none;
+        padding: 0.6rem 1.2rem;
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+        border-radius: 4px;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+      }
+
+      .btn-secondary {
+        background-color: #ffffff;
+        color: var(--color-black);
+        border: 1px solid var(--border-color);
+      }
+
+      /* CV Layout styling */
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        text-transform: uppercase;
+        margin-bottom: 0.2rem;
+      }
+
+      .subtitle {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.15em;
+        color: var(--color-gray);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+
+      .contact-info {
+        font-size: 0.8rem;
+        color: var(--color-gray);
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        list-style: none;
+      }
+
+      .contact-info li:not(:last-child)::after {
+        content: "|";
+        margin-left: 0.75rem;
+        color: var(--color-light-gray);
+      }
+
+      .contact-info a {
+        color: var(--color-gray);
+        text-decoration: none;
+      }
+
+      .contact-info a:hover {
+        color: var(--color-black);
+        text-decoration: underline;
+      }
+
+      section {
+        margin-bottom: 2rem;
+      }
+
+      h2 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        border-bottom: 2px solid var(--color-black);
+        padding-bottom: 0.4rem;
+        margin-bottom: 1.2rem;
+      }
+
+      p.profile-text {
+        font-size: 0.85rem;
+        color: var(--color-dark);
+        line-height: 1.6;
+        text-align: justify;
+      }
+
+      .job-item, .project-item, .education-item {
+        margin-bottom: 1.5rem;
+      }
+
+      .job-header, .edu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+      }
+
+      .job-title, .edu-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .job-meta, .edu-meta {
+        font-size: 0.8rem;
+        color: var(--color-gray);
+        text-align: right;
+      }
+
+      .company-name, .school-name {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--color-gray);
+        margin-bottom: 0.4rem;
+      }
+
+      ul.bullets {
+        list-style-type: disc;
+        padding-left: 1.25rem;
+        font-size: 0.85rem;
+        color: var(--color-dark);
+      }
+
+      ul.bullets li {
+        margin-bottom: 0.3rem;
+      }
+
+      .project-title {
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+
+      .project-desc {
+        font-size: 0.85rem;
+        color: var(--color-dark);
+        line-height: 1.5;
+      }
+
+      /* Skills Grid layout */
+      .skills-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+
+      .skills-col h3 {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--color-gray);
+        letter-spacing: 0.1em;
+        margin-bottom: 0.6rem;
+      }
+
+      /* Print Optimization rules */
+      @media print {
+        body {
+          background-color: #ffffff;
+          padding: 0;
+        }
+
+        .cv-container {
+          box-shadow: none;
+          padding: 0;
+        }
+
+        .action-header {
+          display: none;
+        }
+      }
+
+      @page {
+        size: A4;
+        margin: 20mm;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Action Header (Hidden during print) -->
+    <div class="action-header">
+      <button class="btn btn-secondary" onclick="window.close()">Close</button>
+      <button class="btn" onclick="window.print()">Print / Save PDF</button>
+    </div>
+
+    <!-- Main CV Layout -->
+    <div class="cv-container">
+      <header>
+        <h1>Sinan M</h1>
+        <div class="subtitle">UI/UX Designer &amp; Front-End Developer</div>
+        <ul class="contact-info">
+          <li><a href="mailto:sinanmoozhikkal0@gmail.com">sinanmoozhikkal0@gmail.com</a></li>
+          <li>8714455172</li>
+          <li>Malappuram</li>
+          <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">Linkedin</a></li>
+        </ul>
+      </header>
+
+      <!-- Profile -->
+      <section>
+        <h2>Profile</h2>
+        <p class="profile-text">
+          Creative and passionate UI/UX designer with a strong interest in front-end development. I enjoy creating intuitive, user-centered digital experiences and building simple yet effective prototypes. Currently learning React to develop modern and interactive web applications. My goal is to grow as a designer-developer who can design and build fully functional websites and applications.
+        </p>
+      </section>
+
+      <!-- Professional Experience -->
+      <section>
+        <h2>Professional Experience</h2>
+        <div class="job-item">
+          <div class="job-header">
+            <div class="job-title">UI/UX Designer &amp; Front-End Development (Intern)</div>
+            <div class="job-meta">
+              10/2025 &ndash; Present<br />
+              Malappuram
+            </div>
+          </div>
+          <div class="company-name">Febno Technologies</div>
+          <ul class="bullets">
+            <li>Designed and developed a fully responsive e-commerce website.</li>
+            <li>Created wireframes, user flows, and high-fidelity UI designs.</li>
+            <li>Developed product listing, product detail, cart, and checkout pages.</li>
+            <li>Implemented clean, reusable front-end code using HTML, CSS, Bootstrap, and React.</li>
+            <li>Optimized website performance and ensured mobile responsiveness.</li>
+            <li>Focused on user-centered design and smooth shopping experience.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section>
+        <h2>Projects</h2>
+        <div class="project-item">
+          <div class="project-title">Zoute &ndash; Fashion E-commerce Website</div>
+          <p class="project-desc">
+            Designed and developed a modern fashion e-commerce platform with a minimal UI using Figma and front-end technologies. Built responsive layouts, reusable components, product listings, wishlist and cart features, and optimized the experience for usability, performance, and cross-browser compatibility.
+          </p>
+        </div>
+        <div class="project-item">
+          <div class="project-title">Repzo &ndash; Fitness E-commerce Website</div>
+          <p class="project-desc">
+            Designed and developed a modern fitness e-commerce platform for gym wear, supplements, and fitness equipment. Created responsive interfaces, reusable components, product discovery experiences, and optimized shopping flows to deliver an engaging and seamless user experience.
+          </p>
+        </div>
+      </section>
+
+      <!-- Education -->
+      <section>
+        <h2>Education</h2>
+        <div class="education-item">
+          <div class="edu-header">
+            <div class="edu-title">Skill Diploma in UI/UX designing</div>
+            <div class="edu-meta">
+              10/2025 &ndash; Present<br />
+              Malappuram
+            </div>
+          </div>
+          <div class="school-name">Techno Dot Academy Of R &amp; D &amp; I</div>
+        </div>
+        <div class="education-item">
+          <div class="edu-header">
+            <div class="edu-title">Higher Secondary</div>
+            <div class="edu-meta">
+              2023 &ndash; 2025<br />
+              Malappuram
+            </div>
+          </div>
+          <div class="school-name">Kerala State Board</div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section>
+        <h2>Skills</h2>
+        <div class="skills-columns">
+          <div class="skills-col">
+            <h3>Technical Skills</h3>
+            <ul class="bullets">
+              <li>Figma</li>
+              <li>UI/UX Design &amp; User Research</li>
+              <li>Wireframing &amp; Prototyping</li>
+              <li>Visual Design &amp; Layout</li>
+              <li>Typography &amp; Color Theory</li>
+              <li>Information Architecture</li>
+              <li>Responsive Web Design</li>
+              <li>HTML, CSS, JS, Bootstrap, React</li>
+            </ul>
+          </div>
+          <div class="skills-col">
+            <h3>Soft Skills</h3>
+            <ul class="bullets">
+              <li>Leadership</li>
+              <li>Problem-Solving</li>
+              <li>Organization</li>
+              <li>Team Collaboration</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

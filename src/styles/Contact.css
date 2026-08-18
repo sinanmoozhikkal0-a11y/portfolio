@@ -1,0 +1,154 @@
+/* Luxury Minimalist Contact Form Styles */
+
+.contact-page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--bg-primary);
+  position: relative;
+  transition: background-color 0.4s ease;
+}
+
+/* Massive Left Column Heading */
+.contact-massive-heading {
+  font-family: var(--font-sans), sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  transition: color 0.4s ease;
+}
+
+.contact-massive-heading .bold-text {
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color 0.4s ease;
+}
+
+/* Underline Interactive Input Field */
+.apple-input-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 3.2rem;
+}
+
+.apple-input {
+  width: 100%;
+  padding: 1.2rem 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.4s ease, color 0.4s ease;
+}
+
+.apple-input-focus-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+}
+
+.apple-input-wrapper.focused .apple-input-focus-line {
+  transform: scaleX(1);
+}
+
+.apple-label {
+  position: absolute;
+  left: 0;
+  top: 1.2rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+  letter-spacing: 0.15em;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.4s ease;
+  transform-origin: left top;
+}
+
+/* Floating behavior when active or focused */
+.apple-input-wrapper.focused .apple-label,
+.apple-input-wrapper.has-value .apple-label {
+  transform: translateY(-1.8rem) scale(0.85);
+  color: var(--text-primary);
+}
+
+/* Submit Button - Luxury Ghost to Solid */
+.apple-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1.25rem 2.5rem;
+  border: 1px solid var(--text-primary);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+}
+
+.apple-submit-btn:hover {
+  background-color: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-active);
+}
+
+.apple-submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Social links styling */
+.contact-socials-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 3.5rem;
+}
+
+.contact-pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-gray);
+  border: 1px solid var(--border-primary);
+  background-color: transparent;
+  padding: 0.75rem 1.6rem;
+  border-radius: 100px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, color 0.4s ease;
+}
+
+.contact-pill-link:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
