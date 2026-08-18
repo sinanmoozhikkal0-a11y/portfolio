@@ -30,7 +30,6 @@ if (isCloudinaryConfigured) {
     cloudinary: cloudinary,
     params: {
       folder: "portfolio",
-      allowed_formats: ["jpg", "jpeg", "png", "webp", "pdf", "mp4", "svg"],
       resource_type: "auto",
       public_id: (req, file) => {
         const cleanName = file.originalname.split(".")[0].replace(/[^a-zA-Z0-9]/g, "_");

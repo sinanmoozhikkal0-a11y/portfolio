@@ -210,20 +210,36 @@ export default function ImageUploader({
 
       {/* Error Message */}
       {error && (
-        <div className="mt-3 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs font-bold uppercase tracking-wider flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <AlertCircle size={14} />
-            <span>{error}</span>
+        <div className="mt-3 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-bold uppercase tracking-wider flex flex-col gap-2.5 shadow-lg">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <AlertCircle size={16} className="text-rose-500 flex-shrink-0" />
+              <span>{error}</span>
+            </div>
+            {file && (
+              <button
+                type="button"
+                onClick={() => startUpload(file)}
+                className="flex items-center gap-1 text-[10px] font-black underline hover:text-rose-300"
+              >
+                <RefreshCw size={12} />
+                <span>RETRY</span>
+              </button>
+            )}
           </div>
-          {file && (
-            <button
-              type="button"
-              onClick={() => startUpload(file)}
-              className="flex items-center gap-1 text-[10px] font-black underline hover:text-rose-400"
-            >
-              <RefreshCw size={10} />
-              <span>Retry</span>
-            </button>
+
+          {error.toLowerCase().includes("whitelisted") && (
+            <div className="mt-1 p-3 bg-black/50 border border-rose-500/20 rounded-lg text-[11px] font-normal text-rose-200 lowercase tracking-normal space-y-1.5">
+              <p className="font-bold text-rose-400 uppercase tracking-wider">
+                💡 HOW TO FIX IN 30 SECONDS (CLOUDINARY DASHBOARD):
+              </p>
+              <ol className="list-decimal list-inside space-y-1 text-zinc-300">
+                <li>Go to <a href="https://console.cloudinary.com/settings/c-wjkinqcn/upload/presets" target="_blank" rel="noopener noreferrer" className="underline text-blue-400 font-bold">Cloudinary Dashboard → Settings → Upload</a></li>
+                <li>Scroll down to <strong>Upload presets</strong> and click <strong>Add upload preset</strong> (or edit <code className="bg-black/60 px-1 py-0.5 rounded text-amber-300 font-mono">ml_default</code>).</li>
+                <li>Change <strong>Signing Mode</strong> from <strong className="text-rose-400">Signed</strong> to <strong className="text-emerald-400">Unsigned</strong>.</li>
+                <li>Set <strong>Folder</strong> to <code className="bg-black/60 px-1 py-0.5 rounded text-amber-300 font-mono">portfolio</code> and click <strong>Save</strong>!</li>
+              </ol>
+            </div>
           )}
         </div>
       )}
