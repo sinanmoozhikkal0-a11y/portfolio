@@ -6,14 +6,8 @@
  * @returns {Promise<{ secure_url: string, public_id: string, width: number, height: number, raw: object }>}
  */
 export async function uploadImage(file, onProgress) {
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-
-  if (!cloudName || !uploadPreset) {
-    throw new Error(
-      "Missing Cloudinary environment variables. Please check VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET in your .env file."
-    );
-  }
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "wjkinqcn";
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "ml_default";
 
   if (!file) {
     throw new Error("No file provided for upload.");

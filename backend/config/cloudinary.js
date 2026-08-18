@@ -11,9 +11,9 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-const cloudName = (process.env.CLOUDINARY_CLOUD_NAME || "").trim();
-const apiKey = (process.env.CLOUDINARY_API_KEY || "").trim();
-const apiSecret = (process.env.CLOUDINARY_API_SECRET || "").trim();
+const cloudName = (process.env.CLOUDINARY_CLOUD_NAME || process.env.VITE_CLOUDINARY_CLOUD_NAME || "wjkinqcn").trim();
+const apiKey = (process.env.CLOUDINARY_API_KEY || "895635798727845").trim();
+const apiSecret = (process.env.CLOUDINARY_API_SECRET || "dYwNVGylzci12ISXghTvNOaTN4g").trim();
 
 const isCloudinaryConfigured = Boolean(cloudName && apiKey && apiSecret);
 
