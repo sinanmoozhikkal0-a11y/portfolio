@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import AdminLayout from "./AdminLayout";
+import ImageUploader from "@/components/ImageUploader";
 import { fetchApi } from "@/utils/api";
 import { Plus, Edit2, Trash2, Save, X, Search, Check, AlertCircle, Upload, Link as LinkIcon, Star } from "lucide-react";
 import "./Admin.css";
@@ -348,7 +349,7 @@ export default function ProjectsManager() {
                   <span className="admin-label">PROJECT THUMBNAIL IMAGE</span>
                   <div className="input-mode-tabs">
                     <button type="button" className={`input-mode-tab ${thumbMode === "upload" ? "active" : ""}`} onClick={() => setThumbMode("upload")}>
-                      <Upload size={10} className="inline mr-1" /> UPLOAD
+                      <Upload size={10} className="inline mr-1" /> UPLOAD TO CLOUDINARY
                     </button>
                     <button type="button" className={`input-mode-tab ${thumbMode === "url" ? "active" : ""}`} onClick={() => setThumbMode("url")}>
                       <LinkIcon size={10} className="inline mr-1" /> PASTE URL
@@ -357,14 +358,20 @@ export default function ProjectsManager() {
                 </div>
 
                 {thumbMode === "upload" ? (
-                  <input type="file" accept="image/*" onChange={(e) => setFileThumb(e.target.files[0])} className="admin-input cursor-pointer" />
+                  <ImageUploader
+                    label=""
+                    initialUrl={formData.imageUrl}
+                    onUploadSuccess={(url) => {
+                      setFormData(p => ({ ...p, imageUrl: url }));
+                    }}
+                  />
                 ) : (
-                  <input type="text" value={formData.imageUrl} onChange={(e) => setFormData(p => ({ ...p, imageUrl: e.target.value }))} className="admin-input" placeholder="https://..." />
+                  <input type="text" value={formData.imageUrl} onChange={(e) => setFormData(p => ({ ...p, imageUrl: e.target.value }))} className="admin-input" placeholder="https://res.cloudinary.com/..." />
                 )}
 
-                {formData.imageUrl && (
-                  <div className="preview-box">
-                    <img src={formData.imageUrl} alt="Thumbnail Preview" className="preview-img" />
+                {formData.imageUrl && thumbMode === "url" && (
+                  <div className="preview-box mt-3">
+                    <img src={formData.imageUrl} alt="Thumbnail Preview" className="preview-img max-h-40 rounded-lg object-cover" />
                   </div>
                 )}
               </div>

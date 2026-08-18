@@ -4,6 +4,16 @@ import { cloudinary } from "../config/cloudinary.js";
 
 const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop&q=80";
 
+const normalizeUrl = (filePath) => {
+  if (!filePath) return "";
+  const str = String(filePath).trim();
+  if (str.startsWith("http://") || str.startsWith("https://") || str.startsWith("//")) {
+    return str;
+  }
+  const filename = str.split(/[/\\]/).pop();
+  return `/uploads/${filename}`;
+};
+
 const getPublicIdFromUrl = (url) => {
   if (!url || !url.includes("res.cloudinary.com")) return null;
   try {
@@ -73,7 +83,7 @@ export const createProject = async (req, res, next) => {
       num, title, description, fullDescription, role, category, 
       stack, features, challenges, solutions, duration, outcome, 
       status, demo, github, figma, caseStudyLink, order, isFeatured,
-      imageUrl, bannerUrl, mockupUrls 
+      imageUrl, image, bannerUrl, banner, mockupUrls 
     } = req.body || {};
 
     if (!title || !description) {
@@ -84,32 +94,39 @@ export const createProject = async (req, res, next) => {
     }
 
     // Dual-mode Image Thumbnail
-    let finalImage = "";
+    let rawImage = "";
     if (req.files && req.files.image && req.files.image[0]) {
-      finalImage = req.files.image[0].path;
+      rawImage = req.files.image[0].path || req.files.image[0].secure_url || req.files.image[0].url || "";
     } else if (imageUrl && String(imageUrl).trim() !== "") {
-      finalImage = String(imageUrl).trim();
+      rawImage = String(imageUrl).trim();
+    } else if (image && String(image).trim() !== "") {
+      rawImage = String(image).trim();
     }
+    
+    let finalImage = normalizeUrl(rawImage);
     if (!finalImage) {
       finalImage = DEFAULT_IMAGE;
     }
 
     // Dual-mode Banner Image
-    let finalBanner = "";
+    let rawBanner = "";
     if (req.files && req.files.banner && req.files.banner[0]) {
-      finalBanner = req.files.banner[0].path;
+      rawBanner = req.files.banner[0].path || req.files.banner[0].secure_url || "";
     } else if (bannerUrl) {
-      finalBanner = String(bannerUrl).trim();
+      rawBanner = String(bannerUrl).trim();
+    } else if (banner) {
+      rawBanner = String(banner).trim();
     }
+    let finalBanner = normalizeUrl(rawBanner);
 
     // Dual-mode Mockups
     let finalMockups = [];
     if (req.files && req.files.mockups) {
-      finalMockups = req.files.mockups.map(f => f.path);
+      finalMockups = req.files.mockups.map(f => normalizeUrl(f.path || f.secure_url));
     }
     if (mockupUrls) {
       const parsedUrls = typeof mockupUrls === "string" ? mockupUrls.split(",").map(u => u.trim()).filter(Boolean) : mockupUrls;
-      finalMockups = [...finalMockups, ...parsedUrls];
+      finalMockups = [...finalMockups, ...parsedUrls.map(u => normalizeUrl(u))];
     }
 
     const parsedStack = typeof stack === "string" ? stack.split(",").map(s => s.trim()).filter(Boolean) : (Array.isArray(stack) ? stack : []);
@@ -167,35 +184,42 @@ export const updateProject = async (req, res, next) => {
       num, title, description, fullDescription, role, category, 
       stack, features, challenges, solutions, duration, outcome, 
       status, demo, github, figma, caseStudyLink, order, isFeatured,
-      imageUrl, bannerUrl, mockupUrls 
+      imageUrl, image, bannerUrl, banner, mockupUrls 
     } = req.body || {};
 
-    let finalImage = project.image;
+    let rawImage = project.image;
     if (req.files && req.files.image && req.files.image[0]) {
-      finalImage = req.files.image[0].path;
+      rawImage = req.files.image[0].path || req.files.image[0].secure_url || req.files.image[0].url || "";
     } else if (imageUrl !== undefined && String(imageUrl).trim() !== "") {
-      finalImage = String(imageUrl).trim();
+      rawImage = String(imageUrl).trim();
+    } else if (image !== undefined && String(image).trim() !== "") {
+      rawImage = String(image).trim();
     }
+
+    let finalImage = normalizeUrl(rawImage);
     if (!finalImage) {
       finalImage = DEFAULT_IMAGE;
     }
 
-    let finalBanner = project.banner;
+    let rawBanner = project.banner;
     if (req.files && req.files.banner && req.files.banner[0]) {
-      finalBanner = req.files.banner[0].path;
+      rawBanner = req.files.banner[0].path || req.files.banner[0].secure_url || "";
     } else if (bannerUrl !== undefined) {
-      finalBanner = String(bannerUrl).trim();
+      rawBanner = String(bannerUrl).trim();
+    } else if (banner !== undefined) {
+      rawBanner = String(banner).trim();
     }
+    let finalBanner = normalizeUrl(rawBanner);
 
     let finalMockups = project.mockups || [];
     if (req.files && req.files.mockups && req.files.mockups.length > 0) {
-      const uploadedMockups = req.files.mockups.map(f => f.path);
+      const uploadedMockups = req.files.mockups.map(f => normalizeUrl(f.path || f.secure_url));
       finalMockups = [...finalMockups, ...uploadedMockups];
     }
     if (mockupUrls !== undefined) {
       const parsedUrls = typeof mockupUrls === "string" ? mockupUrls.split(",").map(u => u.trim()).filter(Boolean) : mockupUrls;
       if (Array.isArray(parsedUrls)) {
-        finalMockups = parsedUrls;
+        finalMockups = parsedUrls.map(u => normalizeUrl(u));
       }
     }
 
