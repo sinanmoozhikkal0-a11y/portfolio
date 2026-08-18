@@ -32,21 +32,21 @@ export const getAllMedia = async (req, res, next) => {
 export const uploadMedia = async (req, res, next) => {
   try {
     if (!req.file) {
-      return next(new AppError("Please select a file to upload.", 400));
+      return res.status(400).json({ success: false, message: "Please select a file to upload." });
     }
 
-    // Determine clean file URL (Cloudinary URL vs Local relative URL)
-    let fileUrl = req.file.path || req.file.url;
+    let fileUrl = req.file.path || req.file.secure_url || req.file.url || "";
     if (!fileUrl.startsWith("http://") && !fileUrl.startsWith("https://")) {
       const filename = path.basename(req.file.path);
       fileUrl = `/uploads/${filename}`;
     }
 
+    const publicId = req.file.filename || req.file.public_id || "";
+
     const mediaData = {
-      _id: mongoose.connection.readyState === 1 ? undefined : new mongoose.Types.ObjectId().toString(),
       filename: req.file.originalname,
       url: fileUrl,
-      publicId: req.file.filename || req.file.public_id || "",
+      publicId: publicId,
       size: req.file.size || 0,
       format: req.file.mimetype || "image",
       createdAt: new Date()
@@ -55,18 +55,28 @@ export const uploadMedia = async (req, res, next) => {
     if (mongoose.connection.readyState === 1) {
       const newMedia = await Media.create(mediaData);
       return res.status(201).json({
+        success: true,
         status: "success",
+        secure_url: fileUrl,
+        url: fileUrl,
+        public_id: publicId,
         data: newMedia
       });
     }
 
-    // Offline / Mock success response
     return res.status(201).json({
+      success: true,
       status: "success",
+      secure_url: fileUrl,
+      url: fileUrl,
+      public_id: publicId,
       data: mediaData
     });
   } catch (error) {
-    next(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to upload file to Cloudinary."
+    });
   }
 };
 
