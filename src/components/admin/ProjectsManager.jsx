@@ -10,6 +10,7 @@ export default function ProjectsManager() {
   const [search, setSearch] = useState("");
   const [editingProject, setEditingProject] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const [formData, setFormData] = useState({
     num: "01",
@@ -91,6 +92,7 @@ export default function ProjectsManager() {
     });
     setFileThumb(null);
     setFileBanner(null);
+    setImgError(false);
     setShowModal(true);
   };
 
@@ -122,6 +124,7 @@ export default function ProjectsManager() {
     });
     setFileThumb(null);
     setFileBanner(null);
+    setImgError(false);
     setShowModal(true);
   };
 
@@ -362,16 +365,46 @@ export default function ProjectsManager() {
                     label=""
                     initialUrl={formData.imageUrl}
                     onUploadSuccess={(url) => {
+                      setImgError(false);
                       setFormData(p => ({ ...p, imageUrl: url }));
                     }}
                   />
                 ) : (
-                  <input type="text" value={formData.imageUrl} onChange={(e) => setFormData(p => ({ ...p, imageUrl: e.target.value }))} className="admin-input" placeholder="https://res.cloudinary.com/..." />
+                  <input
+                    type="text"
+                    value={formData.imageUrl}
+                    onChange={(e) => {
+                      setImgError(false);
+                      setFormData(p => ({ ...p, imageUrl: e.target.value }));
+                    }}
+                    className="admin-input"
+                    placeholder="https://res.cloudinary.com/wjkinqcn/image/upload/..."
+                  />
                 )}
 
                 {formData.imageUrl && thumbMode === "url" && (
-                  <div className="preview-box mt-3">
-                    <img src={formData.imageUrl} alt="Thumbnail Preview" className="preview-img max-h-40 rounded-lg object-cover" />
+                  <div className="preview-box mt-3 overflow-hidden rounded-xl border border-white/10 p-3 bg-black/40">
+                    <span className="text-[10px] font-bold text-zinc-400 block mb-2 uppercase tracking-wider">
+                      THUMBNAIL PREVIEW
+                    </span>
+                    {imgError || (!formData.imageUrl.startsWith("http://") && !formData.imageUrl.startsWith("https://") && !formData.imageUrl.startsWith("data:") && !formData.imageUrl.startsWith("/")) ? (
+                      <div className="p-3 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-bold uppercase rounded-lg flex flex-col gap-1">
+                        <div className="flex items-center gap-2">
+                          <AlertCircle size={14} />
+                          <span>INVALID OR BROKEN IMAGE URL</span>
+                        </div>
+                        <span className="text-[10px] font-normal text-rose-300/80 lowercase">
+                          Please enter a full URL (e.g., https://res.cloudinary.com/...) or switch to "UPLOAD TO CLOUDINARY" to select your image file.
+                        </span>
+                      </div>
+                    ) : (
+                      <img
+                        src={formData.imageUrl}
+                        alt="Thumbnail Preview"
+                        onError={() => setImgError(true)}
+                        className="preview-img max-h-48 rounded-lg object-cover w-full border border-white/10"
+                      />
+                    )}
                   </div>
                 )}
               </div>
