@@ -4,61 +4,6 @@ import { cloudinary } from "../config/cloudinary.js";
 
 const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop&q=80";
 
-const FALLBACK_PROJECTS = [
-  {
-    _id: "p1",
-    num: "01",
-    title: "PUNTO PAGO ECOSYSTEM",
-    description: "Building a connected ecosystem where discovering, learning and buying digital financial services feels effortless.",
-    image: "/project4.png",
-    stack: ["REACT", "TAILWIND", "FINTECH API"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "Lead UI/UX Designer & Engineer",
-    duration: "3 Months (Q2 2025)",
-    outcome: "+55% active user engagement"
-  },
-  {
-    _id: "p2",
-    num: "02",
-    title: "VERDANT REAL ESTATE",
-    description: "Building a complete luxury real estate brand, high-rise architectural presentation, and digital experience.",
-    image: "/project2.png",
-    stack: ["NEXT.JS", "FRAMER MOTION", "THREE.JS"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "UI/UX Designer & Dev",
-    duration: "2 Months (Q4 2025)",
-    outcome: "+40% property inquiry conversion"
-  },
-  {
-    _id: "p3",
-    num: "03",
-    title: "ZOUTE LUXURY FASHION",
-    description: "A minimalist e-commerce editorial storefront for a high-end fashion house with high-accuracy typographic composition.",
-    image: "/project1.png",
-    stack: ["REACT", "TAILWIND", "FRAMER MOTION"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "Lead Frontend Engineer",
-    duration: "3 Months (Q1 2026)",
-    outcome: "+45% collection dwell time"
-  },
-  {
-    _id: "p4",
-    num: "04",
-    title: "SCRIBE AI WORKSPACE",
-    description: "An advanced chat playground dashboard for AI prompt engineering with dynamic markdown parsing and split views.",
-    image: "/project3.png",
-    stack: ["REACT", "TYPESCRIPT", "OPENAI"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "Full-Stack UX Engineer",
-    duration: "4 Months (Q2 2026)",
-    outcome: "Fluid multi-view split panes"
-  }
-];
-
 const getPublicIdFromUrl = (url) => {
   if (!url || !url.includes("res.cloudinary.com")) return null;
   try {
@@ -78,8 +23,8 @@ export const getAllProjects = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       status: "success",
-      results: FALLBACK_PROJECTS.length,
-      data: FALLBACK_PROJECTS
+      results: 0,
+      data: []
     });
   }
 
@@ -88,15 +33,14 @@ export const getAllProjects = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       status: "success",
-      results: projects.length > 0 ? projects.length : FALLBACK_PROJECTS.length,
-      data: projects.length > 0 ? projects : FALLBACK_PROJECTS
+      results: projects.length,
+      data: projects
     });
   } catch (error) {
-    return res.status(200).json({
-      success: true,
-      status: "success",
-      results: FALLBACK_PROJECTS.length,
-      data: FALLBACK_PROJECTS
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Failed to retrieve projects.",
+      data: []
     });
   }
 };

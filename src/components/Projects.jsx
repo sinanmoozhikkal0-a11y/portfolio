@@ -1,78 +1,38 @@
-import { useRef, useState, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, ExternalLink, RefreshCw, AlertCircle, FolderX } from "lucide-react";
 import { fetchApi } from "@/utils/api";
 import CaseStudyModal from "./CaseStudyModal";
 import "../styles/Projects.css";
 
-const DEFAULT_PROJECTS = [
-  {
-    _id: "p1",
-    num: "01",
-    title: "PUNTO PAGO ECOSYSTEM",
-    description: "BUILDING A CONNECTED ECOSYSTEM WHERE DISCOVERING, LEARNING AND BUYING DIGITAL FINANCIAL SERVICES FEELS EFFORTLESS.",
-    image: "/project4.png",
-    stack: ["REACT", "TAILWIND", "FINTECH API"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "LEAD UI/UX DESIGNER & ENGINEER",
-    duration: "3 MONTHS (Q2 2025)",
-    outcome: "+55% ACTIVE USER ENGAGEMENT"
-  },
-  {
-    _id: "p2",
-    num: "02",
-    title: "VERDANT REAL ESTATE",
-    description: "BUILDING A COMPLETE LUXURY REAL ESTATE BRAND, HIGH-RISE ARCHITECTURAL PRESENTATION, AND DIGITAL EXPERIENCE.",
-    image: "/project2.png",
-    stack: ["NEXT.JS", "FRAMER MOTION", "THREE.JS"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "UI/UX DESIGNER & DEV",
-    duration: "2 MONTHS (Q4 2025)",
-    outcome: "+40% PROPERTY INQUIRY CONVERSION"
-  },
-  {
-    _id: "p3",
-    num: "03",
-    title: "ZOUTE LUXURY FASHION",
-    description: "A MINIMALIST E-COMMERCE STOREFRONT FOR A HIGH-END FASHION HOUSE WITH HIGH-ACCURACY TYPOGRAPHIC COMPOSITION.",
-    image: "/project1.png",
-    stack: ["REACT", "TAILWIND", "FRAMER MOTION"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "LEAD FRONTEND ENGINEER",
-    duration: "3 MONTHS (Q1 2026)",
-    outcome: "+45% COLLECTION DWELL TIME"
-  },
-  {
-    _id: "p4",
-    num: "04",
-    title: "SCRIBE AI WORKSPACE",
-    description: "AN ADVANCED CHAT PLAYGROUND DASHBOARD FOR AI PROMPT ENGINEERING WITH DYNAMIC MARKDOWN PARSING AND SPLIT VIEWS.",
-    image: "/project3.png",
-    stack: ["REACT", "TYPESCRIPT", "OPENAI"],
-    demo: "https://demo.example.com",
-    github: "https://github.com",
-    role: "FULL-STACK UX ENGINEER",
-    duration: "4 MONTHS (Q2 2026)",
-    outcome: "FLUID MULTI-VIEW SPLIT PANES"
-  }
-];
-
 export default function Projects({ initialProjects }) {
-  const [projectsList, setProjectsList] = useState(initialProjects || DEFAULT_PROJECTS);
+  const [projectsList, setProjectsList] = useState(initialProjects || []);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [loading, setLoading] = useState(!initialProjects);
+  const [error, setError] = useState(null);
+
+  const loadProjects = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetchApi("/projects");
+      if (res && Array.isArray(res.data)) {
+        setProjectsList(res.data);
+      } else if (Array.isArray(res)) {
+        setProjectsList(res);
+      } else {
+        setProjectsList([]);
+      }
+    } catch (err) {
+      setError(err.message || "FAILED TO LOAD PROJECTS FROM SERVER.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!initialProjects) {
-      fetchApi("/projects")
-        .then(res => {
-          if (res.data && res.data.length > 0) {
-            setProjectsList(res.data);
-          }
-        })
-        .catch(() => {});
+      loadProjects();
     }
   }, [initialProjects]);
 
@@ -88,14 +48,14 @@ export default function Projects({ initialProjects }) {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className="group cursor-pointer mb-16 md:mb-20 flex flex-col select-none"
     >
-      {/* Sharp Corner Image Card (No Border Radius) with Corner Frame Brackets & Hover Action Overlay */}
+      {/* Sharp Corner Image Card with Corner Frame Brackets & Hover Action Overlay */}
       <div 
         className="relative w-full aspect-[4/5] rounded-none overflow-hidden bg-zinc-900 border border-black/10 dark:border-white/10 shadow-2xl mb-6 cursor-pointer"
         onClick={() => setSelectedProject(project)}
       >
         {/* Project Image */}
         <img
-          src={project.image}
+          src={project.image || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&auto=format&fit=crop&q=80"}
           alt={project.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
@@ -108,7 +68,7 @@ export default function Projects({ initialProjects }) {
 
         {/* Project Number Pill Badge */}
         <div className="absolute top-4 left-4 bg-zinc-900/90 text-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/15 text-[10px] font-bold tracking-[0.2em] uppercase z-20 shadow-md">
-          PROJECT {project.num || `0${idx + 1}`}
+          PROJECT {project.num || (idx + 1 < 10 ? `0${idx + 1}` : `${idx + 1}`)}
         </div>
 
         {/* Hover Action Overlay with Minimalist Line Buttons */}
@@ -144,12 +104,14 @@ export default function Projects({ initialProjects }) {
         className="flex flex-col cursor-pointer mt-1"
         onClick={() => setSelectedProject(project)}
       >
-        {/* Subheading tag line (Muted theme zinc color matching website theme) */}
+        {/* Subheading tag line */}
         <div className="text-xs font-bold tracking-[0.2em] text-zinc-500 dark:text-zinc-400 uppercase mb-1.5">
-          {Array.isArray(project.stack) ? project.stack.slice(0, 3).join(" • ") : (project.category || "UI/UX • FRONTEND")}
+          {Array.isArray(project.stack) && project.stack.length > 0
+            ? project.stack.slice(0, 3).join(" • ")
+            : (project.category || "UI/UX • FRONTEND")}
         </div>
 
-        {/* Main Heading Title (Theme high-contrast text color) */}
+        {/* Main Heading Title */}
         <h3 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-black dark:text-white group-hover:opacity-75 transition-opacity">
           {project.title}
         </h3>
@@ -178,22 +140,56 @@ export default function Projects({ initialProjects }) {
             </h2>
           </div>
           <p className="text-sm text-zinc-500 max-w-sm">
-            A curated selection of 4 digital products, editorial platforms, and full-stack web applications.
+            A curated selection of digital products, editorial platforms, and full-stack web applications.
           </p>
         </motion.div>
 
-        {/* 2-Column Staggered Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
-          {/* Left Column (Items 0, 2) */}
-          <div className="flex flex-col">
-            {leftColumnProjects.map((project, idx) => renderProjectCard(project, idx * 2))}
+        {/* Loading State */}
+        {loading ? (
+          <div className="py-24 text-center flex flex-col items-center justify-center gap-4">
+            <RefreshCw size={24} className="animate-spin text-black dark:text-white" />
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-zinc-500 animate-pulse">
+              LOADING PROJECTS FROM DATABASE...
+            </p>
           </div>
+        ) : error ? (
+          /* Error State */
+          <div className="py-16 px-6 text-center border border-rose-500/20 bg-rose-500/5 rounded-2xl flex flex-col items-center justify-center gap-4">
+            <AlertCircle size={28} className="text-rose-500" />
+            <p className="text-xs font-bold tracking-[0.2em] uppercase text-rose-500">{error}</p>
+            <button
+              onClick={loadProjects}
+              className="px-6 py-2.5 border border-rose-500 text-rose-500 text-xs font-bold tracking-widest uppercase hover:bg-rose-500 hover:text-white transition-all duration-300 cursor-pointer flex items-center gap-2"
+            >
+              <RefreshCw size={12} />
+              <span>RETRY</span>
+            </button>
+          </div>
+        ) : projectsList.length === 0 ? (
+          /* Empty State */
+          <div className="py-24 px-6 text-center border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 rounded-2xl flex flex-col items-center justify-center gap-3">
+            <FolderX size={32} className="text-zinc-400" />
+            <h3 className="text-lg font-bold tracking-[0.15em] uppercase text-black dark:text-white">
+              NO PROJECTS AVAILABLE
+            </h3>
+            <p className="text-xs font-semibold tracking-wider text-zinc-500 uppercase max-w-md">
+              ADMIN CAN ADD OR UPDATE PROJECTS FROM THE CMS PANEL.
+            </p>
+          </div>
+        ) : (
+          /* 2-Column Staggered Grid */
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+            {/* Left Column (Items 0, 2, 4...) */}
+            <div className="flex flex-col">
+              {leftColumnProjects.map((project, idx) => renderProjectCard(project, idx * 2))}
+            </div>
 
-          {/* Right Column (Items 1, 3) - Offset Downward for Staggered Rhythm */}
-          <div className="flex flex-col md:pt-16 lg:pt-24">
-            {rightColumnProjects.map((project, idx) => renderProjectCard(project, idx * 2 + 1))}
+            {/* Right Column (Items 1, 3, 5...) - Offset Downward for Staggered Rhythm */}
+            <div className="flex flex-col md:pt-16 lg:pt-24">
+              {rightColumnProjects.map((project, idx) => renderProjectCard(project, idx * 2 + 1))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Case Study Details Modal */}
